@@ -67,7 +67,7 @@ const pen = DataFrame(Any[ [27,23,26,23,23,21,27,23,26,23,23,21,25,21,25,24,24,2
                             23,23,19,24,21,23,21,21,19,26,23,26,24,24,21,25,21,24,22,22,18,
                             25,22,25,22,22,20,24,21,24,22,24,19,24,21,24,22,21,18],
                       NominalArray(Compat.repeat('a' : 'x', inner = 6)),
-                      NominalArray(Compat.repeat(collect('A' : 'F'), outer = 24)),
+                      NominalArray(Compat.repeat('A' : 'F', outer = 24))],
                       [:Diameter, :Plate, :Sample])
 
 ## InstEval data from the lme4 package

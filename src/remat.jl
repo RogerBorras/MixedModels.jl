@@ -18,7 +18,7 @@ Members:
 - `cnms`: a `Vector` of column names
 """
 immutable ScalarReMat{T <: AbstractFloat, S, R <: Integer} <: ReMat
-    f::PooledDataVector{S,R}
+    f::CategoricalVector{S,R}
     z::Vector{T}
     fnm::Symbol
     cnms::Vector
@@ -37,7 +37,7 @@ Members:
 - `cnms`: a `Vector` of column names (row names after transposition) of `z`
 """
 immutable VectorReMat{T <: AbstractFloat, S, R <: Integer} <: ReMat
-    f::PooledDataVector{S,R}
+    f::CategoricalVector{S,R}
     z::Matrix{T}
     fnm::Symbol
     cnms::Vector
@@ -54,7 +54,7 @@ function remat(e::Expr, df::DataFrame)
     e.args[1] == :| || throw(ArgumentError("$e is not a call to '|'"))
     fnm = e.args[3]
     gr = getindex(df,fnm)
-    gr = isa(gr,PooledDataArray) ? gr : pool(gr)
+    gr = isa(gr, CategoricalArray) ? gr : NominalVector(convert(Array, gr))
     if e.args[2] == 1
         return ScalarReMat(gr, ones(length(gr)), fnm, ["(Intercept)"])
     end
@@ -66,7 +66,7 @@ end
 
 Base.eltype(R::ReMat) = eltype(R.z)
 
-function Base.copy!{S,R}(d::PooledDataVector{S,R}, s::PooledDataVector{S,R})
+function Base.copy!{S,R}(d::CategoricalVector{S,R}, s::CategoricalVector{S,R})
     copy!(d.pool, s.pool)
     copy!(d.refs, s.refs)
     d

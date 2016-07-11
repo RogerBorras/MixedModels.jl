@@ -2,7 +2,7 @@ __precompile__()
 
 module MixedModels
 
-using Compat, DataArrays, GLM, DataFrames, Distributions, NLopt, Showoff, StatsBase
+using Compat, CategoricalArrays, GLM, DataFrames, Distributions, NLopt, Showoff, StatsBase
 using StatsFuns: log2π
 
 import StatsBase: coef, coeftable, df, deviance, fit!, fitted, loglikelihood,
